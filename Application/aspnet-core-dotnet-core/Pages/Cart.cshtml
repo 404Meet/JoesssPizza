@@ -1,0 +1,89 @@
+﻿@page
+@model aspnet_core_dotnet_core.Pages.CartModel
+@{
+    var TotalPrice = 0;
+    var GrandTotal = 0;
+}
+<br />
+<h3>Cart </h3>
+@*<form method="post">
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h4 class="text-primary font-monospace">Who's Buying ? If you're a retailer enter specific quantity.</h4>
+            <h5 class="text-primary font-monospace">Product Detaills</h5>
+        </div>
+        <div class="col">
+            <input asp-for="Name" class="form-control card border-secondary mb-1" placeholder="Name" readonly />
+            <input asp-for="Price" class="form-control card border-secondary mb-1" placeholder="Price" readonly />
+        </div>
+       <div class="mb-3">
+            <label asp-for="quantity">Enter Quantity</label>
+            <input asp-for="quantity" class="form-control" />
+            <br />
+            <button type="submit" class="btn btn-primary">Go to Cart</button>
+        </div>
+
+    </div>
+</form>*@
+
+ @foreach (var obj in Model.p.Pizza)
+        {
+          <div>
+               @obj.name
+          </div>
+          <br />
+            <div class="card border-secondary">
+                <table class="table table-bordered table-striped" style="width:100%">
+                    <thead>
+                        <tr class="table-primary">
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Quantity
+                            </th>
+                            <th>
+                                Price
+                            </th>
+                            <th>
+                                Total
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @*@foreach (var obj2 in Model)
+                    {*@
+                        <tr class="table-danger">
+                            <td width="50%">
+                                @obj.name
+                            </td>
+                            <td width="10%">
+                                <button id="inc" asp-action="Add" type="button" class="btn btn-outline-dark">+</button>
+                                @obj.quantity
+                                <button id="dec" asp-action="Sub" type="button" class="btn btn-outline-dark">-</button>
+                            </td>
+                            <td width="20%">
+                                Rs.
+                                @obj.price
+                                /-
+                            </td>
+                            <td width="20%">
+                                Rs.
+                                @{
+                                    TotalPrice = obj.price * obj.quantity;
+                                    GrandTotal = GrandTotal + TotalPrice;
+                                }
+                                @TotalPrice /-
+                            </td>
+                        </tr>
+                        @*}*@
+                    </tbody>
+                </table>
+            </div>
+        }
+<div class="text-end">
+    <button type="button" class="btn btn-warning"><i class="bi bi-wallet-fill"></i> &nbsp; Grand Total: @GrandTotal</button>
+    <button type="button" class="btn btn-light"><i class="bi bi-paypal"></i> &nbsp; PayPal</button>
+    <button type="button" class="btn btn-danger"><i class="bi bi-wallet"></i> &nbsp; UPI</button>
+    <button type="button" class="btn btn-success"><i class="bi bi-credit-card"></i> &nbsp; Card</button>
+</div>
