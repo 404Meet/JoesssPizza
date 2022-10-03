@@ -1,0 +1,37 @@
+﻿@page
+@model aspnet_core_dotnet_core.Pages.CheckoutModel
+@{
+    Random rnd = new Random();
+    int num = rnd.Next();
+}
+<br />
+<h2>Order Confirmed</h2>
+<br />
+  
+
+<div class="card text-white bg-info border-danger" style="max-width: 25rem;">
+    <div class="card-header text-center">Receipt</div>
+    <div class="card-body">
+        <img src="https://img.icons8.com/plasticine/344/verified-account.png" />
+        <center>
+        Order ID: &nbsp; @num
+        @foreach (var item in Model.cart)
+        { 
+            <div>
+            @item.Product.name &nbsp;
+            @item.Product.price &nbsp;
+            </div>
+        }
+        <br />
+        <h4 class="card-title">
+        <tr class="card-title">
+            <td colspan="6" align="right">Total Paid:</td>
+            <td align="center">RS. @Model.Total /-</td>
+        </tr>
+        </h4>
+        <p class="card-text">Thank You!!! Keep Smiling, Keep Eating. <p
+        </center>
+    </div>
+</div>
+<br />
+<br />

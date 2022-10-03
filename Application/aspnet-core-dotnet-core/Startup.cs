@@ -31,7 +31,7 @@ namespace aspnet_core_dotnet_core
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-
+            services.AddSession();
             services.AddRazorPages();
         }
 
@@ -51,6 +51,7 @@ namespace aspnet_core_dotnet_core
             app.UseCookiePolicy();
             app.UseRouting();
             app.UseAuthorization();
+            app.UseSession(); 
 
             app.UseEndpoints(endpoints => {
                 endpoints.MapRazorPages();

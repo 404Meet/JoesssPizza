@@ -1,35 +1,15 @@
 ﻿@page
 @model aspnet_core_dotnet_core.Pages.CartModel
 @{
-    var TotalPrice = 0;
-    var GrandTotal = 0;
+  
 }
 <br />
-<h3>Cart </h3>
-@*<form method="post">
-    <div class="border p-3 mt-4">
-        <div class="row pb-2">
-            <h4 class="text-primary font-monospace">Who's Buying ? If you're a retailer enter specific quantity.</h4>
-            <h5 class="text-primary font-monospace">Product Detaills</h5>
-        </div>
-        <div class="col">
-            <input asp-for="Name" class="form-control card border-secondary mb-1" placeholder="Name" readonly />
-            <input asp-for="Price" class="form-control card border-secondary mb-1" placeholder="Price" readonly />
-        </div>
-       <div class="mb-3">
-            <label asp-for="quantity">Enter Quantity</label>
-            <input asp-for="quantity" class="form-control" />
-            <br />
-            <button type="submit" class="btn btn-primary">Go to Cart</button>
-        </div>
-
-    </div>
-</form>*@
-
- @foreach (var obj in Model.p.Pizza)
+<h4>Cart </h4>
+@*
+ @foreach (var obj in Model.cart)
         {
           <div>
-               @obj.name
+               @obj.Product.name
           </div>
           <br />
             <div class="card border-secondary">
@@ -51,32 +31,32 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @*@foreach (var obj2 in Model)
-                    {*@
+ 
                         <tr class="table-danger">
                             <td width="50%">
-                                @obj.name
+                                @obj.Product.name
                             </td>
                             <td width="10%">
-                                <button id="inc" asp-action="Add" type="button" class="btn btn-outline-dark">+</button>
-                                @obj.quantity
-                                <button id="dec" asp-action="Sub" type="button" class="btn btn-outline-dark">-</button>
+                                <form method="post">
+                                 <button id="inc" type="submit" class="btn btn-outline-dark">+</button>
+                                 <input id="" asp-for="@obj.Quantity" class="form-control"/>
+                                 <button id="dec" type="submit" class="btn btn-outline-dark">-</button>
+                                </form>
                             </td>
                             <td width="20%">
                                 Rs.
-                                @obj.price
+                                @obj.Product.price
                                 /-
                             </td>
                             <td width="20%">
                                 Rs.
                                 @{
-                                    TotalPrice = obj.price * obj.quantity;
+                                    TotalPrice = obj.Product.price * obj.Quantity;
                                     GrandTotal = GrandTotal + TotalPrice;
                                 }
                                 @TotalPrice /-
                             </td>
                         </tr>
-                        @*}*@
                     </tbody>
                 </table>
             </div>
@@ -87,3 +67,50 @@
     <button type="button" class="btn btn-danger"><i class="bi bi-wallet"></i> &nbsp; UPI</button>
     <button type="button" class="btn btn-success"><i class="bi bi-credit-card"></i> &nbsp; Card</button>
 </div>
+*@
+<br />
+
+<form method="post" asp-page="cart" asp-page-handler="update">
+    <table border="1" class="table table-bordered table-striped" style="width:100%">
+        <thead>
+        <tr class="table-primary">
+            <th width="10%">Action</th>
+            <th width="10%">Item Number</th>
+            <th width="10%">Name</th>
+            <th width="25%"><center>Photo</center></th>
+            <th width="10%">Price</th>
+            <th width="15%">Quantity</th>
+            <th width="10%">Sub Total</th>
+        </tr>
+        </thead>
+        @foreach (var item in Model.cart)
+        {
+            <tr class="table-danger" align="center">
+                <td align="center" width="10%">
+                    <a class="btn btn-info" asp-page="cart" asp-page-handler="delete" asp-route-id="@item.Product.ID">Delete</a>
+                </td>
+                <td width="10%">@item.Product.ID</td>
+                <td width="10%">@item.Product.name</td>
+                <td width="25%"><img src="@item.Product.image" width="120" height="100" /></td>
+                <td width="10%">Rs. @item.Product.price /-</td>
+                <td width="15%"><input class="form-control" type="number" name="quantities" value="@item.Quantity" min="1" style="width: 50px;" /> <input class="btn btn-info" type="submit" value="Update" /></td>
+                <td width="10%">
+                    Rs. @(item.Product.price * item.Quantity) /-
+                </td>
+            </tr>
+        }
+        <tr>
+            <td colspan="6" align="right">Total</td>
+            <td align="center">Rs. @Model.Total /-</td>
+        </tr>
+    </table>
+</form>
+<a asp-page="pizza">Add more Pizza</a>
+<div class="text-end"> 
+    <a type="button" asp-page="Checkout" class="btn btn-warning"><i class="bi bi-wallet-fill"></i> &nbsp; Grand Total: @Model.Total </a>
+    <a type="button" asp-page="Checkout" class="btn btn-light"><i class="bi bi-paypal"></i> &nbsp; PayPal</a>
+    <a type="button" asp-page="Checkout" class="btn btn-danger"><i class="bi bi-wallet"></i> &nbsp; UPI</a>
+    <a type="button" asp-page="Checkout" class="btn btn-success"><i class="bi bi-credit-card"></i> &nbsp; Card</a>
+</div>
+<br />
+<br />

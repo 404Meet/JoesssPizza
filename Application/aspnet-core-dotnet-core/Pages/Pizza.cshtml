@@ -4,7 +4,7 @@
 }
 <br />
 <h4>Your Pizza page.</h4>
- @foreach (var obj in Model.Pizza)
+ @foreach (var obj in Model.Products)
 {
     
 @*    <img src="@obj.image" height="350" width="340" style="padding:5px;" alt="...">
@@ -24,7 +24,7 @@
                 <a href="#" class="card-link">Official link</a>
                 <a href="#" class="card-link">How to make?</a>
                 <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                    <a class="btn btn-primary" asp-page="/Cart"><i class="bi bi-cart-fill"></i> &nbsp; Add to Cart</a>
+                    <a class="btn btn-primary" asp-page="/Cart" asp-page-handler="buynow" asp-route-id="@obj.ID"><i class="bi bi-cart-fill"></i> &nbsp; Add to Cart</a>
                     <button type="button" class="btn btn-secondary" ><i class="bi bi-bag-heart-fill"></i> &nbsp; Wishtlist</button>
             </div>
         </div>
